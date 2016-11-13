@@ -1,0 +1,19 @@
+{
+  "name": "tasker",
+  "version": "1.0.0",
+  "description": "Task for everything",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yalcinaltin/tasker.git"
+  },
+  "author": "Cemal Yalcin Altin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yalcinaltin/tasker/issues"
+  },
+  "homepage": "https://github.com/yalcinaltin/tasker#readme"
+}
