@@ -1,11 +1,22 @@
 import React from 'react';
+import AppBar from 'material-ui/AppBar';
+import TodoList from './todoList.js';
+import AddTodo from './addTodo.js';
 
-export default class App extends React.Component {
+import { connect } from 'react-redux';
+
+class Main extends React.Component {
     render() {
-        return (
-            <div>
-            <h1>React Task Reminder</h1>
-        </div>
-    );
+        return (<div>
+            <AppBar title="3RES Todo" iconClassNameRight="muidocs-icon-navigation-expand-more" />
+            <TodoList todos={this.props.todos} />
+            <AddTodo />
+        </div>);
     }
 }
+
+function mapStateToProps(todos) {
+    return { todos };
+}
+
+export default connect(mapStateToProps)(Main);
