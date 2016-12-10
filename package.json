@@ -6,8 +6,8 @@
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js  --recursive",
     "test:watch": "npm run test -- --watch",
-    "start": "node ./server/socket.js",
-    "watch": "nodemon ./server/socket.js",
+    "start": "node ./server/server.js",
+    "watch": "nodemon ./server/server.js",
     "web-dev": "webpack-dev-server --host 127.0.0.1 --port 9090"
   },
   "repository": {
@@ -23,21 +23,22 @@
   "dependencies": {
     "babel-plugin-transform-class-properties": "6.6.0",
     "body-parser": "~1.15.1",
+    "cheerio": "^0.22.0",
     "cookie-parser": "~1.4.3",
+    "cron": "^1.1.1",
     "debug": "~2.2.0",
     "ejs": "^2.5.2",
     "express": "^4.14.0",
-    "fixed-data-table": "^0.6.3",
     "jquery": "^3.1.1",
     "material-ui": "^0.16.1",
-    "material-ui-table": "^0.1.2",
+    "mongoose": "^4.7.2",
     "morgan": "~1.7.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
     "react-tap-event-plugin": "^1.0.0",
     "redux": "^3.6.0",
-    "rethinkdb": "^2.3.3",
+    "request": "^2.79.0",
     "serve-favicon": "~2.3.0",
     "socket.io": "^1.5.1"
   },

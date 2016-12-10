@@ -2,7 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
-    devtool: 'inline-source-map',
+    devtool: 'source-map',
     entry: './src/index.js',
     output: {
         path: path.join(__dirname, 'public/js'),
@@ -24,16 +24,16 @@ module.exports = {
         }]
     },
     plugins: [
-        // new webpack.optimize.OccurenceOrderPlugin(),
-        // new webpack.DefinePlugin({
-        //     'process.env': {
-        //         'NODE_ENV': JSON.stringify('production')
-        //     }
-        // }),
-        // new webpack.optimize.UglifyJsPlugin({
-        //     compressor: {
-        //         warnings: false
-        //     }
-        // })
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            compressor: {
+                warnings: false
+            }
+        })
     ]
 };
