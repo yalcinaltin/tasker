@@ -3,7 +3,6 @@
  */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-
 //hepsi ayrı ayrı tablo birleştirmelimi olsun bu şekil mi
 // dez avantaj 1 kayıt getirmek isterken bütün rateler geliyor
 //ya da ben bilmiyorum
@@ -18,7 +17,6 @@ const value = new Schema({
 const rates = new Schema({
     rateSymbol: String,
     values: [value],
-    createDate: {type: Date, default: Date.now},
     _id: false,
     id: false
 });
@@ -28,14 +26,15 @@ const currencySchema = new Schema({
     rates: [rates],
     createDate: Date,
     updateDate: Date
-});
+},{ versionKey: false });
 const lastRateSchema = new Schema({
     base: String,
     rateSymbol: String,
     buy: Number,
     sale: Number,
     createDate: { type: Date, default: Date.now }
-});
+},{ versionKey: false });
+
 currencySchema.pre('save', function (next) {
     // get the current date
     var currentDate = new Date();
@@ -49,8 +48,9 @@ currencySchema.pre('save', function (next) {
 
     next();
 });
-currencySchema.pre('update', function () {
+currencySchema.pre('update', function (next) {
     this.updateDate = new Date();
+    next();
 });
 
 var Currency = mongoose.model('Currency', currencySchema);

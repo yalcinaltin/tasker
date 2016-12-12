@@ -1,4 +1,5 @@
 var express = require('express');
+var compression = require('compression');
 var app = express();
 var path = require('path');
 var debug = require('debug')('NodeProj:server');
@@ -39,6 +40,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../', 'public')));
+app.use(compression());
 
 //Set routes
 app.use('/', routes);

@@ -7,7 +7,7 @@
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js  --recursive",
     "test:watch": "npm run test -- --watch",
     "start": "node ./server/server.js",
-    "watch": "nodemon ./server/server.js",
+    "start:prod": "SET NODE_ENV=development & npm run start",
     "web-dev": "webpack-dev-server --host 127.0.0.1 --port 9090"
   },
   "repository": {

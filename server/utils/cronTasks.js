@@ -6,16 +6,20 @@ var currencyHelper = require('./currencyHelper');
 
 var cronTasks = (function () {
     let currencyCheck = (base) => {
-        var currencyJob = new CronJob('*/10 * * * * *',function () {
-            //currencyHelper.getCurrency(base);
-            currencyHelper.lastRate("USD","TRY");
+        var checkJob = new CronJob('00 */2 9-17 * * 1-5',function () {
+            currencyHelper.getCurrency(base);
         },null,true);
-        return currencyJob;
+        return checkJob;
     };
-    let currencyControl = () => {
+    let currencyControl = (base,rateSymbol) => {
+        var controlJob = new CronJob('00 */2 9-17 * * 1-5',function () {
+            currencyHelper.lastRate(base,rateSymbol);
+        },null,true);
+        return controlJob;
     };
     let start = () => {
         currencyCheck("USD").start();
+        currencyControl("USD","TRY").start();
     };
     return {
         start: start
