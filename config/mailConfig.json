@@ -1,0 +1,12 @@
+{
+  "smtpConfig": {
+    "pool":true,
+    "host": "smtp.gmail.com",
+    "port": 465,
+    "secure": true,
+    "auth": {
+      "user": "speedfreak.11@gmail.com",
+      "pass": "c6iiN7ZaMOrImF#*k5db"
+    }
+  }
+}

@@ -19,7 +19,7 @@ var db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "connection error"));
 db.once("open", function (callback) {
-     cronTasks.start();
+    cronTasks.start();
 });
 //Get Routes
 var routes = require('./routes/index');
@@ -37,7 +37,7 @@ app.disable('etag');
 app.use(favicon(path.join(__dirname, '../', 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../', 'public')));
 app.use(compression());
