@@ -2,3 +2,4 @@
 *.gitattributes
 /.idea
 /node_modules
+/.vscode
