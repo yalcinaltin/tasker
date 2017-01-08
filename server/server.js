@@ -1,5 +1,5 @@
 var app = require('./app');
-var debug = require('debug')('NodeProj:server');
+var debug = require('debug')('Tasker:server');
 var http = require('http');
 
 var port = 3000;

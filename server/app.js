@@ -26,7 +26,7 @@ var routes = require('./routes/index');
 
 // Set handlebars as the templating engine
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('view engine', 'pug')
 // Set server port
 var port = 3000;
 app.set('port', port);
