@@ -1,12 +1,12 @@
 {
   "smtpConfig": {
     "pool":true,
-    "host": "smtp.gmail.com",
+    "host": "smtp.yandex.com.tr",
     "port": 465,
     "secure": true,
     "auth": {
-      "user": "speedfreak.11@gmail.com",
-      "pass": "c6iiN7ZaMOrImF#*k5db"
+      "user": "info@njtasker.com",
+      "pass": "i7o0yKY12yWyhx"
     }
   }
 }

@@ -13,7 +13,7 @@ var mailHelper = (function () {
         return new Promise(resolve => {
             let mailTemplate = pug.renderFile('./server/mailTemplates/usdTemplate.pug', data);
             let mailOptions = {
-                from: '"SpeedFreak" <speedfreak.11@gmail.com>',
+                from: '"info" '+smtpConfig.auth.user,
                 to: 'cemalyalcinaltin@gmail.com',
                 subject: '✔ $ is updated',
                 html: mailTemplate
