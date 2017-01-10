@@ -7,13 +7,13 @@ var currencyHelper = require('./currencyHelper');
 var cronTasks = (function () {
     let currencyCheck = (base) => {
         //
-        var checkJob = new CronJob('00 */2 9-17 * * 1-5', function () {
+        var checkJob = new CronJob('00 * * * * *', function () {
             currencyHelper.getCurrency(base);
         }, null, true);
         return checkJob;
     };
     let currencyControl = (base, rateSymbol, downValue, upValue) => {
-        var controlJob = new CronJob('00 */2 9-17 * * 1-5', function () {
+        var controlJob = new CronJob('00 * * * * *', function () {
             currencyHelper.lastRate(base, rateSymbol, downValue, upValue);
         }, null, true);
         return controlJob;

@@ -39,12 +39,29 @@ var currencyHelper = (function () {
     };
     let getMaxRate = (base, rateSymbol) => {
         return new Promise(function (resolve, reject) {
-            Currency.findOne({base: "USD"})
+            Currency.findOne({base: base})
                 .populate({
                     path: "rates",
-                    match: {"rateSymbol": "TRY"},
+                    match: {"rateSymbol": rateSymbol},
                     select: 'buy sale',
                     options: {sort: "-buy", limit: 1}
+                }).lean()
+                .exec(function (err, curr) {
+                    if (curr)
+                        resolve({buy: curr.rates[0].buy, sale: curr.rates[0].sale});
+                    else
+                        reject("Record Not Found");
+                });
+        });
+    };
+    let getLastRate = (base, rateSymbol) => {
+        return new Promise(function (resolve, reject) {
+            Currency.findOne({base: base})
+                .populate({
+                    path: "rates",
+                    match: {"rateSymbol": rateSymbol},
+                    select: 'buy sale',
+                    options: {sort: "-createDate", limit: 1}
                 }).lean()
                 .exec(function (err, curr) {
                     if (curr)
@@ -61,9 +78,10 @@ var currencyHelper = (function () {
     let lastRate = (base, rateSymbol, downValue, upValue) => {
         LastRate.findOne({base: base, rateSymbol: rateSymbol})
             .sort({createDate: -1})
+            .lean()
             .exec(function (err, last) {
                 if (err) throw err;
-                getMaxRate(base, rateSymbol)
+                getLastRate(base, rateSymbol)
                     .then((maxRate) => {
                         var rate = new LastRate({
                             base: base,
