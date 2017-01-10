@@ -60,7 +60,7 @@ var currencyHelper = (function () {
     };
     let lastRate = (base, rateSymbol, downValue, upValue) => {
         LastRate.findOne({base: base, rateSymbol: rateSymbol})
-            .sort({buy: -1})
+            .sort({createDate: -1})
             .exec(function (err, last) {
                 if (err) throw err;
                 getMaxRate(base, rateSymbol)
