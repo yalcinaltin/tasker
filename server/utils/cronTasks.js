@@ -20,7 +20,7 @@ var cronTasks = (function () {
     };
     let start = () => {
         currencyCheck("USD").start();
-        currencyControl("USD", "TRY", -0.03, 0.02).start();
+        currencyControl("USD", "TRY", -0.02, 0.02).start();
     };
     return {
         start: start

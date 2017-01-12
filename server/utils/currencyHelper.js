@@ -95,7 +95,7 @@ var currencyHelper = (function () {
                             if (last.buy - maxRate.buy < upValue && last.buy - maxRate.buy > downValue)
                                 return
                             oldBuy = last.buy;
-                            oldSale = last.buy;
+                            oldSale = last.sale;
                         } else {
                             oldBuy = maxRate.buy;
                             oldSale = maxRate.sale;
