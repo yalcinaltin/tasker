@@ -8,7 +8,9 @@
     "test:watch": "npm run test -- --watch",
     "start": "node ./server/server.js",
     "start:prod": "SET NODE_ENV=production & npm run start",
-    "web-dev": "webpack-dev-server --host 127.0.0.1 --port 9090"
+    "web-dev": "webpack-dev-server --host 127.0.0.1 --port 9090",
+    "build":"webpack --progress --colors",
+    "build:prod":"SET NODE_ENV=production &npm run build"
   },
   "repository": {
     "type": "git",
@@ -49,6 +51,8 @@
     "babel-loader": "^6.2.7",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
+    "css-loader": "^0.26.1",
+    "style-loader": "^0.13.1",
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.16.2"
   }

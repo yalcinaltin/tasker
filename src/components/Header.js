@@ -5,7 +5,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import { Route, Router } from 'react-router'
 
 
-
 export default class Header extends Component  {
 
     constructor(props){
@@ -34,7 +33,7 @@ export default class Header extends Component  {
                 </Drawer>
 
                 <AppBar
-                    title="App Bar Example"
+                    title="njTasker"
                     onLeftIconButtonTouchTap={this.handleToggle}/>
             </div>
         );

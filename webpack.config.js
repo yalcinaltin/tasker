@@ -1,8 +1,11 @@
 const webpack = require('webpack');
 const path = require('path');
 
-module.exports = {
-    devtool: 'source-map',
+var debug = typeof (process.env.NODE_ENV) ==="undefined";
+
+
+const WebpackConfig = {
+    devtool: debug ? "inline-sourcemap" : null,
     entry: './src/index.js',
     output: {
         path: path.join(__dirname, 'public/js'),
@@ -21,19 +24,19 @@ module.exports = {
                 presets: ['es2015', 'react'],
                 plugins: ['transform-class-properties']
             }
+        }, {
+            test: /\.css$/,
+            exclude: /node_modules/,
+            loader: 'style!css'
         }]
     },
-    plugins: [
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify('production')
-            }
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            compressor: {
+    plugins: debug ? [] : [
+            new webpack.optimize.DedupePlugin(),
+            new webpack.optimize.OccurenceOrderPlugin(),
+            new webpack.optimize.UglifyJsPlugin({mangle: false, sourcemap: false,compressor: {
                 warnings: false
-            }
-        })
-    ]
+            }})
+        ]
 };
+
+module.exports = WebpackConfig;

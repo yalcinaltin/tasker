@@ -7,20 +7,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
 
-var cronTasks = require("./utils/cronTasks");
-
-
-mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost:27017/Tasker");
-
-var db = mongoose.connection;
-
-db.on("error", console.error.bind(console, "connection error"));
-db.once("open", function (callback) {
-    cronTasks.start();
-});
 //Get Routes
 var routes = require('./routes/index');
 

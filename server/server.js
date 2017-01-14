@@ -1,12 +1,13 @@
-var app = require('./app');
-var debug = require('debug')('Tasker:server');
-var http = require('http');
+const app = require('./app');
+const debug = require('debug')('Tasker:server');
+const http = require('http');
 
-var port = 3000;
+const port = 3000;
 app.set('port', port);
 
 //Create HTTP server.
-var server = http.createServer(app);
+const server = http.createServer(app);
+const controllers = require('./controllers');
 
 //Listen on provided port, on all network interfaces.
 server.listen(port);
@@ -46,3 +47,15 @@ function onListening() {
         : 'port ' + addr.port;
     debug('Listening on ' + bind);
 }
+
+const mongoose = require('mongoose');
+const cronTasks = require("./utils/cronTasks");
+mongoose.Promise = global.Promise;
+mongoose.connect("mongodb://localhost:27017/Tasker");
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error"));
+db.once("open", function (callback) {
+    //cronTasks.start();
+    controllers.io.listen(server);
+});
