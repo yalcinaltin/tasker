@@ -128,7 +128,8 @@ var currencyHelper = (function () {
     };
     return {
         getCurrency: getCurrency,
-        lastRate: lastRate
+        lastRate: lastRate,
+        getLastRate:getLastRate
     };
 })();
 

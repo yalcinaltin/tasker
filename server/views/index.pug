@@ -2,4 +2,9 @@ extends layout
 
 block content
   div(id='main')
+  script#currency(type="application/json").
+      {
+        "lastBuy":#{lastBuy},
+        "lastSale":#{lastSale}
+      }
   script(src='js/bundle.js?'+version)

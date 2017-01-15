@@ -15,10 +15,11 @@ export default class Header extends Component  {
 
     constructor(props){
         super(props);
+        var data = JSON.parse(document.getElementById("currency").textContent);
         this.state = {
             open:false,
-            lastBuy:"0.00",
-            lastSale:"0.00"
+            lastBuy:data.lastBuy,
+            lastSale:data.lastSale
         };
         this.handleToggle = this.handleToggle.bind(this);
 
