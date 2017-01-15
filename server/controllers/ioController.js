@@ -28,18 +28,12 @@ module.exports.listen = function (server) {
         });
         // delete todoList
         socket.on('todo:client:delete', function (todo) {
-            console.log("delete:");
-            console.log(todo);
+            todoHelper.deleteTodo(todo);
         });
         var sentMydata = false;
         if (!sentMydata) {
-            //bunuda diğeri gibi içeri al
-            todoHelper.listTodos().then((todos) => {
-                todos.map(todo => {
-                    socket.emit("todo:insert", todo);
-                });
-                sentMydata = true;
-            });
+            todoHelper.listTodos();
+            sentMydata = true;
         }
     });
     return io;

@@ -56,6 +56,6 @@ mongoose.connect("mongodb://localhost:27017/Tasker");
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
 db.once("open", function (callback) {
-    //cronTasks.start();
+    cronTasks.start();
     controllers.io.listen(server);
 });

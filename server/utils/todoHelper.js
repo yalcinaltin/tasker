@@ -7,23 +7,47 @@ const todoHelper = (() => {
 
     let addTodo = (todo) => {
         var _todo = new Todo(todo);
-        _todo.save();
+        _todo.save(function (err) {
+            if (err) throw err;
+            controllers.io.emitter("todo:insert", _todo);
+
+            controllers.io.emitter('changeState', {
+                changeState: true,
+                msg: "Kayıt eklendi"
+            });
+        });
     };
     let updateTodo = (todo) => {
-        console.log(todo);
-        controllers.io.emitter("todo:update", todo);
-        console.log("off");
+        Todo.findOne({_id: todo._id}, function (err, _todo) {
+            _todo.completed = todo.completed;
+            _todo.save(function (err) {
+                if (err) throw err;
+                controllers.io.emitter("todo:update", todo);
+
+                controllers.io.emitter('changeState', {
+                    changeState: true,
+                    msg: "Kayıt güncellendi"
+                });
+            });
+        });
     };
     let deleteTodo = (todo) => {
-        console.log(todo);
+        Todo.find({_id: todo._id}).remove().exec(
+            function (err) {
+                if (err) throw err;
+                controllers.io.emitter("todo:delete", todo);
+
+                controllers.io.emitter('changeState', {
+                    changeState: true,
+                    msg: "Kayıt silindi"
+                });
+            }
+        );
     };
     let listTodos = () => {
-        return new Promise(function (resolve, reject) {
-            Todo.find().lean().exec((err, todos) => {
-                if (todos)
-                    resolve(todos);
-                else
-                    reject("Record Not Found");
+        Todo.find().lean().exec((err, todos) => {
+            todos.map(todo => {
+                controllers.io.emitter("todo:insert", todo);
             });
         });
     };
@@ -31,7 +55,7 @@ const todoHelper = (() => {
         addTodo: addTodo,
         updateTodo: updateTodo,
         deleteTodo: deleteTodo,
-        listTodos:listTodos
+        listTodos: listTodos
     }
 })
 ();

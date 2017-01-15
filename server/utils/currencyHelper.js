@@ -1,11 +1,12 @@
 /**
  * Created by yalcinaltin on 10.12.2016.
  */
-var Currency = require('../models/Currency').Currency;
-var LastRate = require('../models/Currency').LastRate;
-var Rate = require('../models/Currency').Rate;
-var crawlers = require('./crawlers');
-var mailHelper = require('./mailHelper');
+const Currency = require('../models/Currency').Currency;
+const LastRate = require('../models/Currency').LastRate;
+const Rate = require('../models/Currency').Rate;
+const crawlers = require('./crawlers');
+const mailHelper = require('./mailHelper');
+const controllers = require('../controllers');
 
 var currencyHelper = (function () {
     let currencyList = {};
@@ -31,7 +32,12 @@ var currencyHelper = (function () {
                     curr.rates.push(rate);
                     curr.save(function (err) {
                         if (err) throw err;
-                        //TODO socket.io burada kullanıcak
+
+                        let data ={
+                            lastBuy: buy,
+                            lastSale: sale
+                        };
+                        controllers.io.emitter("currencyChange", data);
                     });
                 }
             });
@@ -91,27 +97,29 @@ var currencyHelper = (function () {
                         });
                         let oldBuy;
                         let oldSale;
+                        let sendMessage = true;
                         if (last) {
                             if (last.buy - maxRate.buy < upValue && last.buy - maxRate.buy > downValue)
-                                return
+                                sendMessage = false;
                             oldBuy = last.buy;
                             oldSale = last.sale;
                         } else {
                             oldBuy = maxRate.buy;
                             oldSale = maxRate.sale;
                         }
-                        rate.save(function (err) {
-                            if (err) throw err;
-                            //şimdilik mail gönderimi burada olsun
-                            //pre'de olabilir tekrar kontrol edilebilir.
-                            let data = {
-                                oldBuy: oldBuy,
-                                oldSale: oldSale,
-                                newBuy: maxRate.buy,
-                                newSale: maxRate.sale
-                            };
-                            mailHelper.sendMail('USD', data);
-                        });
+                        let data = {
+                            oldBuy: oldBuy,
+                            oldSale: oldSale,
+                            newBuy: maxRate.buy,
+                            newSale: maxRate.sale
+                        };
+                        if (sendMessage)
+                            rate.save(function (err) {
+                                if (err) throw err;
+                                //şimdilik mail gönderimi burada olsun
+                                //pre'de olabilir tekrar kontrol edilebilir.
+                                mailHelper.sendMail('USD', data);
+                            });
                     })
                     .catch(err => {
                         console.error(new Error(err))

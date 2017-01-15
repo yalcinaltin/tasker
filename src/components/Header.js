@@ -4,13 +4,31 @@ import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import { Route, Router } from 'react-router'
 
+import {List, ListItem} from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
+
+// Import socket and connect
+import io from 'socket.io-client';
+const socket = io.connect('/');
 
 export default class Header extends Component  {
 
     constructor(props){
         super(props);
-        this.state = {open:false};
-        this.handleToggle = this.handleToggle.bind(this)
+        this.state = {
+            open:false,
+            lastBuy:"0.00",
+            lastSale:"0.00"
+        };
+        this.handleToggle = this.handleToggle.bind(this);
+
+        var $this = this;
+        socket.on('currencyChange', function (state) {
+            $this.setState({
+                lastBuy:state.lastBuy,
+                lastSale:state.lastSale
+            });
+        });
     }
 
     getChildContext() {
@@ -29,7 +47,19 @@ export default class Header extends Component  {
                     open={this.state.open}
                     onRequestChange={(open) => this.setState({open})}
                 >
-                    <MenuItem onTouchTap={this.handleClose}>Buralar hep dolacak</MenuItem>
+                    <List className="currContainer">
+                        <Subheader>Last Rate</Subheader>
+                        <ListItem
+                            primaryText="Alış"
+                            secondaryText={this.state.lastBuy}
+                            rightIcon={<i className="fa fa-usd"/>}
+                        />
+                        <ListItem
+                            primaryText="Satış"
+                            secondaryText={this.state.lastSale}
+                            rightIcon={<i className="fa fa-usd"/>}
+                        />
+                    </List>
                 </Drawer>
 
                 <AppBar
