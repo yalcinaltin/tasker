@@ -51,7 +51,7 @@ function onListening() {
 const mongoose = require('mongoose');
 const cronTasks = require("./utils/cronTasks");
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost:27017/Tasker");
+mongoose.connect("mongodb://njtasker:kfumeROp4T3d@ds011903.mlab.com:11903/njtasker");
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
